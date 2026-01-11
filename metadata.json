@@ -1,0 +1,7 @@
+{
+  "name": "EnergyWise - Energy Management",
+  "description": "Smart energy tracking and cost calculation app for home appliances.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
