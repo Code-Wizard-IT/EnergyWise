@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Screen, Appliance } from './types';
 import DeviceFrame from './components/DeviceFrame';
 
@@ -30,6 +29,25 @@ const App: React.FC = () => {
   const [currentScreen, setCurrentScreen] = useState<Screen>(Screen.SPLASH);
   const [devices, setDevices] = useState<Appliance[]>(MOCK_DEVICES);
   const [selectedDevice, setSelectedDevice] = useState<Appliance | null>(null);
+  const [isPWA, setIsPWA] = useState(false);
+
+  // Detect if running as PWA (standalone mode)
+  useEffect(() => {
+    const checkPWA = () => {
+      const isStandalone = window.matchMedia('(display-mode: standalone)').matches 
+        || (window.navigator as any).standalone === true
+        || document.referrer.includes('android-app://');
+      setIsPWA(isStandalone);
+    };
+    
+    checkPWA();
+    
+    // Listen for display mode changes
+    const mediaQuery = window.matchMedia('(display-mode: standalone)');
+    mediaQuery.addEventListener('change', checkPWA);
+    
+    return () => mediaQuery.removeEventListener('change', checkPWA);
+  }, []);
 
   const navigateTo = (screen: Screen, params?: any) => {
     if (params?.device) setSelectedDevice(params.device);
@@ -83,6 +101,18 @@ const App: React.FC = () => {
     }
   };
 
+  // PWA Mode: Full screen without device frame
+  if (isPWA) {
+    return (
+      <div className="h-screen w-screen bg-[#F5F7FA] overflow-hidden">
+        <div className="h-full w-full max-w-[430px] mx-auto bg-[#F5F7FA] overflow-hidden relative">
+          {renderScreen()}
+        </div>
+      </div>
+    );
+  }
+
+  // Browser Mode: With device frame and navigator
   return (
     <div className="min-h-screen bg-gray-200 flex items-center justify-center p-4">
       {/* Visual Navigator for Demo */}

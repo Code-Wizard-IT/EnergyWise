@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Genera Icone EnergyWise</title>
+</head>
+<body>
+    <h1>Generatore Icone PWA</h1>
+    <p>Clicca il pulsante per scaricare tutte le icone:</p>
+    <button onclick="generateAllIcons()">Genera e Scarica Icone</button>
+    <div id="preview"></div>
+    
+    <script>
+        const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
+        
+        function generateIcon(size) {
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            
+            // Background con bordi arrotondati
+            const radius = size * 0.22;
+            ctx.fillStyle = '#00A86B';
+            ctx.beginPath();
+            ctx.roundRect(0, 0, size, size, radius);
+            ctx.fill();
+            
+            // Fulmine
+            ctx.fillStyle = 'white';
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = size * 0.02;
+            ctx.lineJoin = 'round';
+            
+            const scale = size / 512;
+            const offsetX = size * 0.05;
+            const offsetY = size * 0.05;
+            
+            ctx.beginPath();
+            ctx.moveTo(290 * scale + offsetX, 100 * scale + offsetY);
+            ctx.lineTo(170 * scale + offsetX, 280 * scale + offsetY);
+            ctx.lineTo(240 * scale + offsetX, 280 * scale + offsetY);
+            ctx.lineTo(215 * scale + offsetX, 410 * scale + offsetY);
+            ctx.lineTo(355 * scale + offsetX, 210 * scale + offsetY);
+            ctx.lineTo(275 * scale + offsetX, 210 * scale + offsetY);
+            ctx.lineTo(310 * scale + offsetX, 100 * scale + offsetY);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+            
+            return canvas;
+        }
+        
+        function generateAllIcons() {
+            const preview = document.getElementById('preview');
+            preview.innerHTML = '<h2>Anteprima:</h2>';
+            
+            sizes.forEach((size, index) => {
+                const canvas = generateIcon(size);
+                
+                // Mostra anteprima
+                const img = document.createElement('img');
+                img.src = canvas.toDataURL('image/png');
+                img.style.margin = '10px';
+                img.style.border = '1px solid #ccc';
+                img.title = `${size}x${size}`;
+                preview.appendChild(img);
+                
+                // Scarica con delay per evitare blocchi
+                setTimeout(() => {
+                    const link = document.createElement('a');
+                    link.download = `icon-${size}x${size}.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                }, index * 500);
+            });
+        }
+    </script>
+</body>
+</html>
