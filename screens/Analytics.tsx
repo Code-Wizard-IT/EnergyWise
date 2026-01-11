@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Appliance } from '../types';
 import { Card, SafeAreaView, Badge } from '../components/EnergyWiseElements';
-import { BarChart3, TrendingUp, Info, ChevronRight, PieChart, Calendar, TrendingDown, LayoutGrid } from 'lucide-react';
+import { BarChart3, TrendingUp, Info, ChevronRight, PieChart, Calendar, TrendingDown, LayoutGrid, Zap } from 'lucide-react';
 
 const Analytics: React.FC<{ devices: Appliance[] }> = ({ devices }) => {
   const [period, setPeriod] = useState<'Settimana' | 'Mese' | 'Anno'>('Settimana');
@@ -22,6 +22,9 @@ const Analytics: React.FC<{ devices: Appliance[] }> = ({ devices }) => {
 
   const linePath = weeklyData.reduce((acc, val, i) => 
     acc + (i === 0 ? `M ${getX(i)} ${getY(val)}` : ` L ${getX(i)} ${getY(val)}`), '');
+
+  // Totale settimanale
+  const weeklyTotal = weeklyData.reduce((a, b) => a + b, 0);
 
   return (
     <SafeAreaView className="bg-[#F5F7FA]">
@@ -96,7 +99,7 @@ const Analytics: React.FC<{ devices: Appliance[] }> = ({ devices }) => {
            </div>
         </Card>
 
-        {/* Stats Row */}
+        {/* Stats Row - FIXED: Both cards have content */}
         <div className="grid grid-cols-2 gap-4">
            <Card className="p-5 flex flex-col gap-2 border-[#E5E7EB]">
               <span className="text-[9px] font-black text-[#6B7280] uppercase tracking-widest">Media Giornaliera</span>
@@ -146,21 +149,38 @@ const Analytics: React.FC<{ devices: Appliance[] }> = ({ devices }) => {
            </Card>
         </section>
 
-        {/* Insights Box */}
-        <div className="bg-[#1A1A2E] p-6 rounded-[24px] flex gap-5 mb-8 text-white relative overflow-hidden">
-           <div className="w-14 h-14 shrink-0 bg-white/10 rounded-2xl flex items-center justify-center text-[#FFB800]">
-              <Info size={28} />
+        {/* Insights Box - ENLARGED */}
+        <div className="bg-[#1A1A2E] p-8 rounded-[24px] mb-8 text-white relative overflow-hidden">
+           <div className="flex gap-5 mb-4">
+              <div className="w-16 h-16 shrink-0 bg-white/10 rounded-2xl flex items-center justify-center text-[#FFB800]">
+                 <Info size={32} />
+              </div>
+              <div className="relative z-10 flex-1">
+                 <h4 className="font-black text-lg text-white mb-2">Analisi IA Avanzata</h4>
+                 <p className="text-sm text-white/70 font-medium leading-relaxed">
+                    Abbiamo rilevato un picco di consumo di <span className="text-[#FF6B35] font-bold">4.2 kWh</span> nella giornata di Giovedì.
+                 </p>
+              </div>
            </div>
-           <div className="relative z-10">
-              <h4 className="font-black text-sm text-white mb-1">Analisi IA Avanzata</h4>
-              <p className="text-xs text-white/60 font-medium leading-relaxed">
-                 Abbiamo rilevato un picco di <span className="text-[#FF6B35] font-bold">4.2 kWh</span> il Giovedì. Sembra che la <span className="text-white font-bold">Lavasciuga</span> sia stata utilizzata nella fascia oraria di punta (F1).
+           
+           <div className="bg-white/5 rounded-xl p-4 mb-4">
+              <p className="text-sm text-white/80 leading-relaxed">
+                 Sembra che la <span className="text-white font-bold">Lavasciuga</span> sia stata utilizzata nella fascia oraria di punta (F1), quando il costo dell'energia è più alto. 
+                 Ti consigliamo di spostare l'utilizzo nelle fasce F2 o F3 per risparmiare fino a <span className="text-[#00A86B] font-bold">€3.50/mese</span>.
               </p>
-              <button className="mt-4 text-[10px] font-black text-[#00A86B] uppercase tracking-widest flex items-center gap-1">
-                 Vedi dettagli picco <ChevronRight size={12} />
+           </div>
+           
+           <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                 <Zap size={16} className="text-[#FFB800]" />
+                 <span className="text-[10px] font-black text-white/50 uppercase tracking-widest">Suggerimento automatico</span>
+              </div>
+              <button className="text-[11px] font-black text-[#00A86B] uppercase tracking-widest flex items-center gap-1 bg-[#00A86B]/10 px-4 py-2 rounded-full">
+                 Vedi dettagli <ChevronRight size={14} />
               </button>
            </div>
-           <LayoutGrid size={100} className="absolute -right-8 -bottom-8 text-white/5 rotate-12 pointer-events-none" />
+           
+           <LayoutGrid size={120} className="absolute -right-10 -bottom-10 text-white/5 rotate-12 pointer-events-none" />
         </div>
       </div>
     </SafeAreaView>
