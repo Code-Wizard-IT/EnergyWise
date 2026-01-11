@@ -68,8 +68,8 @@ const DeviceDetail: React.FC<{
 
   return (
     <div className="h-full bg-[#F5F7FA] overflow-y-auto no-scrollbar pb-[100px]">
-      {/* Header Section - REDUCED HEIGHT */}
-      <div className={`h-52 pt-[60px] relative flex flex-col items-center justify-center transition-colors duration-500 ${isActive ? 'bg-[#1A1A2E]' : 'bg-gray-400'}`}>
+      {/* Header Section */}
+      <div className={`pt-[60px] pb-6 relative flex flex-col items-center justify-center transition-colors duration-500 ${isActive ? 'bg-[#1A1A2E]' : 'bg-gray-400'}`}>
         <button 
           onClick={onBack} 
           className="absolute top-16 left-6 w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center backdrop-blur text-white active:scale-90 transition-all border border-white/5"
@@ -77,20 +77,21 @@ const DeviceDetail: React.FC<{
           <ArrowLeft size={24} />
         </button>
         
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center mt-4">
           <div className="relative">
-             <div className={`w-16 h-16 rounded-[24px] flex items-center justify-center shadow-2xl transition-all duration-500 ${isActive ? 'bg-[#00A86B]' : 'bg-white/10'}`}>
-                <Zap size={32} className={isActive ? 'text-white fill-white' : 'text-white/40'} />
+             <div className={`w-14 h-14 rounded-[20px] flex items-center justify-center shadow-2xl transition-all duration-500 ${isActive ? 'bg-[#00A86B]' : 'bg-white/10'}`}>
+                <Zap size={28} className={isActive ? 'text-white fill-white' : 'text-white/40'} />
              </div>
-             {isActive && <div className="absolute inset-0 bg-[#00A86B] rounded-[24px] animate-ping opacity-10"></div>}
+             {isActive && <div className="absolute inset-0 bg-[#00A86B] rounded-[20px] animate-ping opacity-10"></div>}
           </div>
-          <h1 className="mt-3 text-white text-lg font-black">{currentDevice.customName || currentDevice.model}</h1>
-          <p className="text-white/50 text-[9px] font-black uppercase tracking-[2px]">{currentDevice.brand} • {currentDevice.model}</p>
+          <h1 className="mt-2 text-white text-base font-black">{currentDevice.customName || currentDevice.model}</h1>
+          <p className="text-white/50 text-[8px] font-black uppercase tracking-[2px]">{currentDevice.brand} • {currentDevice.model}</p>
         </div>
       </div>
 
-      <div className="px-6 -mt-4">
-        {/* Specs Card - PROPERLY POSITIONED */}
+      {/* Content Section - NO negative margin */}
+      <div className="px-6 mt-4">
+        {/* Specs Card */}
         <Card className="mb-6 border-none" elevated>
            <div className="flex items-center justify-between mb-4">
               <h3 className="text-[10px] font-black text-[#6B7280] uppercase tracking-[2px]">Specifiche Tecniche</h3>
