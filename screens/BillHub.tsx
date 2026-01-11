@@ -20,67 +20,49 @@ const BillHub: React.FC<{ navigateTo: (s: Screen) => void }> = ({ navigateTo }) 
     <SafeAreaView className="bg-[#F5F7FA]">
       <h1 className="text-2xl font-[900] text-[#1A1A2E] mb-6 mt-4">Bollette e Costi</h1>
 
-      {/* Bar Chart Card - VERY LARGE AND VISIBLE */}
-      <div className="bg-white rounded-[24px] shadow-lg mb-6 overflow-hidden border border-[#E5E7EB]">
+      {/* Bar Chart Card - VERY LARGE */}
+      <div className="bg-white rounded-[24px] shadow-lg mb-8 overflow-hidden border border-[#E5E7EB]">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-[#F5F7FA] flex justify-between items-center">
-          <h3 className="text-base font-black text-[#1A1A2E]">Storico Costi (€)</h3>
-          <div className="flex items-center gap-1 bg-[#E8F5E9] px-3 py-1.5 rounded-full">
-            <TrendingDown size={14} className="text-[#00A86B]" />
-            <span className="text-[10px] font-black text-[#00A86B]">-13%</span>
+        <div className="px-6 py-5 border-b border-[#F5F7FA] flex justify-between items-center">
+          <h3 className="text-lg font-black text-[#1A1A2E]">Storico Costi (€)</h3>
+          <div className="flex items-center gap-2 bg-[#E8F5E9] px-4 py-2 rounded-full">
+            <TrendingDown size={16} className="text-[#00A86B]" />
+            <span className="text-xs font-black text-[#00A86B]">-13% vs 6 mesi fa</span>
           </div>
         </div>
         
-        {/* Chart Area */}
-        <div className="px-6 py-6">
+        {/* Chart Area - MUCH LARGER */}
+        <div className="px-6 py-8">
           {/* Bar Chart */}
-          <div className="flex items-end justify-between gap-3" style={{ height: '180px' }}>
+          <div className="flex items-end justify-between gap-4" style={{ height: '220px' }}>
             {monthlyData.map((item, i) => {
               const heightPercent = (item.cost / maxCost) * 100;
               const isLast = i === monthlyData.length - 1;
               return (
-                <div key={i} className="flex-1 flex flex-col items-center gap-2 h-full justify-end">
-                  <span className="text-xs font-black text-[#1A1A2E]">€{item.cost}</span>
+                <div key={i} className="flex-1 flex flex-col items-center gap-3 h-full justify-end">
+                  <span className="text-sm font-black text-[#1A1A2E]">€{item.cost}</span>
                   <div 
-                    className={`w-full rounded-t-xl ${isLast ? 'bg-[#00A86B]' : 'bg-[#E5E7EB]'}`}
+                    className={`w-full rounded-xl ${isLast ? 'bg-[#00A86B]' : 'bg-[#E5E7EB]'}`}
                     style={{ height: `${heightPercent}%` }}
                   />
-                  <span className="text-[11px] font-black text-[#6B7280] uppercase">{item.month}</span>
+                  <span className="text-xs font-black text-[#6B7280] uppercase">{item.month}</span>
                 </div>
               );
             })}
           </div>
           
           {/* Summary */}
-          <div className="flex items-center justify-between pt-6 mt-6 border-t border-[#F5F7FA]">
+          <div className="flex items-center justify-between pt-8 mt-8 border-t border-[#F5F7FA]">
             <div>
-              <span className="text-[10px] font-black text-[#6B7280] uppercase tracking-widest block mb-1">Media 6 Mesi</span>
-              <span className="text-2xl font-black text-[#1A1A2E]">€100.17</span>
+              <span className="text-[11px] font-black text-[#6B7280] uppercase tracking-widest block mb-2">Media 6 Mesi</span>
+              <span className="text-3xl font-black text-[#1A1A2E]">€100.17</span>
             </div>
             <div className="text-right">
-              <span className="text-[10px] font-black text-[#6B7280] uppercase tracking-widest block mb-1">Totale Periodo</span>
-              <span className="text-2xl font-black text-[#0077B6]">€601.00</span>
+              <span className="text-[11px] font-black text-[#6B7280] uppercase tracking-widest block mb-2">Totale Periodo</span>
+              <span className="text-3xl font-black text-[#0077B6]">€601.00</span>
             </div>
           </div>
         </div>
-      </div>
-
-      {/* CTA Card - Green */}
-      <div className="bg-[#00A86B] rounded-[24px] p-6 mb-6 relative overflow-hidden shadow-lg">
-        <div className="relative z-10">
-          <h3 className="font-black text-xl text-white mb-2">Ottimizza i Costi</h3>
-          <p className="text-white/80 text-xs font-medium mb-6 max-w-[200px] leading-relaxed">
-            Scansiona la bolletta per calcoli precisi basati sulla tua tariffa reale.
-          </p>
-          <button 
-            onClick={() => navigateTo(Screen.BILL_SCANNER)}
-            className="bg-white text-[#00A86B] py-3 px-6 rounded-xl text-sm font-black flex items-center gap-2"
-          >
-            <Camera size={18} />
-            Scansiona Ora
-          </button>
-        </div>
-        <FileText size={160} className="absolute -right-6 -bottom-6 text-white/10" />
       </div>
 
       {/* Tariffa Section */}
