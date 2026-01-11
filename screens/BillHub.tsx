@@ -1,7 +1,7 @@
 import React from 'react';
 import { Screen } from '../types';
-import { Card, Button, Badge, SafeAreaView } from '../components/EnergyWiseElements';
-import { FileText, Camera, SlidersHorizontal, ArrowUpRight, TrendingDown } from 'lucide-react';
+import { Badge, SafeAreaView } from '../components/EnergyWiseElements';
+import { FileText, SlidersHorizontal, ArrowUpRight, TrendingDown } from 'lucide-react';
 
 const BillHub: React.FC<{ navigateTo: (s: Screen) => void }> = ({ navigateTo }) => {
   // Dati per il grafico a colonne
@@ -20,46 +20,56 @@ const BillHub: React.FC<{ navigateTo: (s: Screen) => void }> = ({ navigateTo }) 
     <SafeAreaView className="bg-[#F5F7FA]">
       <h1 className="text-2xl font-[900] text-[#1A1A2E] mb-6 mt-4">Bollette e Costi</h1>
 
-      {/* Bar Chart Card - VERY LARGE */}
-      <div className="bg-white rounded-[24px] shadow-lg mb-8 overflow-hidden border border-[#E5E7EB]">
+      {/* Bar Chart Card */}
+      <div className="bg-white rounded-[24px] shadow-lg mb-8 border border-[#E5E7EB]">
         {/* Header */}
-        <div className="px-6 py-5 border-b border-[#F5F7FA] flex justify-between items-center">
-          <h3 className="text-lg font-black text-[#1A1A2E]">Storico Costi (€)</h3>
-          <div className="flex items-center gap-2 bg-[#E8F5E9] px-4 py-2 rounded-full">
-            <TrendingDown size={16} className="text-[#00A86B]" />
-            <span className="text-xs font-black text-[#00A86B]">-13% vs 6 mesi fa</span>
+        <div className="px-5 py-4 border-b border-[#F0F0F0] flex justify-between items-center">
+          <h3 className="text-base font-black text-[#1A1A2E]">Storico Costi (€)</h3>
+          <div className="flex items-center gap-1 bg-[#E8F5E9] px-3 py-1.5 rounded-full">
+            <TrendingDown size={14} className="text-[#00A86B]" />
+            <span className="text-[10px] font-black text-[#00A86B]">-13% vs 6 mesi fa</span>
           </div>
         </div>
         
-        {/* Chart Area - MUCH LARGER */}
-        <div className="px-6 py-8">
-          {/* Bar Chart */}
-          <div className="flex items-end justify-between gap-4" style={{ height: '220px' }}>
+        {/* Chart Content */}
+        <div className="p-5">
+          {/* Grafico a Colonne */}
+          <div className="flex items-end justify-between gap-2 mb-6" style={{ height: '160px' }}>
             {monthlyData.map((item, i) => {
-              const heightPercent = (item.cost / maxCost) * 100;
-              const isLast = i === monthlyData.length - 1;
+              const barHeight = (item.cost / maxCost) * 140;
+              const isCurrentMonth = i === monthlyData.length - 1;
+              
               return (
-                <div key={i} className="flex-1 flex flex-col items-center gap-3 h-full justify-end">
-                  <span className="text-sm font-black text-[#1A1A2E]">€{item.cost}</span>
+                <div key={i} className="flex-1 flex flex-col items-center">
+                  {/* Valore sopra la barra */}
+                  <span className="text-[11px] font-bold text-[#1A1A2E] mb-2">€{item.cost}</span>
+                  
+                  {/* Barra */}
                   <div 
-                    className={`w-full rounded-xl ${isLast ? 'bg-[#00A86B]' : 'bg-[#E5E7EB]'}`}
-                    style={{ height: `${heightPercent}%` }}
+                    style={{ 
+                      height: `${barHeight}px`,
+                      width: '100%',
+                      backgroundColor: isCurrentMonth ? '#00A86B' : '#E5E7EB',
+                      borderRadius: '8px 8px 0 0'
+                    }}
                   />
-                  <span className="text-xs font-black text-[#6B7280] uppercase">{item.month}</span>
+                  
+                  {/* Mese sotto la barra */}
+                  <span className="text-[10px] font-bold text-[#6B7280] mt-2 uppercase">{item.month}</span>
                 </div>
               );
             })}
           </div>
           
-          {/* Summary */}
-          <div className="flex items-center justify-between pt-8 mt-8 border-t border-[#F5F7FA]">
+          {/* Riepilogo */}
+          <div className="flex justify-between items-center pt-4 border-t border-[#F5F7FA]">
             <div>
-              <span className="text-[11px] font-black text-[#6B7280] uppercase tracking-widest block mb-2">Media 6 Mesi</span>
-              <span className="text-3xl font-black text-[#1A1A2E]">€100.17</span>
+              <p className="text-[9px] font-black text-[#6B7280] uppercase tracking-wider mb-1">Media 6 Mesi</p>
+              <p className="text-xl font-black text-[#1A1A2E]">€100.17</p>
             </div>
             <div className="text-right">
-              <span className="text-[11px] font-black text-[#6B7280] uppercase tracking-widest block mb-2">Totale Periodo</span>
-              <span className="text-3xl font-black text-[#0077B6]">€601.00</span>
+              <p className="text-[9px] font-black text-[#6B7280] uppercase tracking-wider mb-1">Totale Periodo</p>
+              <p className="text-xl font-black text-[#0077B6]">€601.00</p>
             </div>
           </div>
         </div>
