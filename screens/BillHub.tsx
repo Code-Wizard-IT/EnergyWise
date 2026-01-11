@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Screen } from '../types';
 import { Card, Button, Badge, SafeAreaView } from '../components/EnergyWiseElements';
@@ -6,7 +5,7 @@ import { Search, Plus, FileText, ChevronRight, Camera, Calculator, SlidersHorizo
 
 const BillHub: React.FC<{ navigateTo: (s: Screen) => void }> = ({ navigateTo }) => (
   <SafeAreaView className="bg-[#F5F7FA]">
-    <h1 className="text-2xl font-[900] text-[#1A1A2E] mb-6 mt-4">Bollette & Costi</h1>
+    <h1 className="text-2xl font-[900] text-[#1A1A2E] mb-6 mt-4">Bollette e Costi</h1>
 
     <Card className="bg-[#00A86B] text-white border-none p-6 mb-8 relative overflow-hidden" elevated>
        <div className="relative z-10">
@@ -38,7 +37,7 @@ const BillHub: React.FC<{ navigateTo: (s: Screen) => void }> = ({ navigateTo }) 
              <Badge bgColor="#0077B6">ARERA</Badge>
           </Card>
           <Card className="p-5 flex flex-col gap-2 border-[#E5E7EB]">
-             <span className="text-[9px] font-black text-[#6B7280] uppercase tracking-widest">Prev. Prossima</span>
+             <span className="text-[9px] font-black text-[#6B7280] uppercase tracking-widest">Previsione</span>
              <span className="text-2xl font-black text-[#1A1A2E]">€84.20</span>
              <span className="text-[10px] text-[#6B7280] font-black uppercase tracking-tighter">Mese Corrente</span>
           </Card>
@@ -52,9 +51,9 @@ const BillHub: React.FC<{ navigateTo: (s: Screen) => void }> = ({ navigateTo }) 
        </div>
        <div className="flex flex-col gap-3">
           {[
-             { month: 'Febbraio', year: 2024, cost: 92.40, kwh: 310, status: 'Actual' },
-             { month: 'Gennaio', year: 2024, cost: 105.80, kwh: 345, status: 'Actual' },
-             { month: 'Dicembre', year: 2023, cost: 118.20, kwh: 380, status: 'Actual' }
+             { month: 'Febbraio', year: 2024, cost: 92.40, kwh: 310, status: 'Reale' },
+             { month: 'Gennaio', year: 2024, cost: 105.80, kwh: 345, status: 'Reale' },
+             { month: 'Dicembre', year: 2023, cost: 118.20, kwh: 380, status: 'Reale' }
           ].map((bill, i) => (
              <Card key={i} className="flex items-center gap-4 py-4 px-5 border-[#E5E7EB]">
                 <div className="w-12 h-12 bg-[#F5F7FA] rounded-[12px] flex items-center justify-center text-[#6B7280] border border-[#E5E7EB]">

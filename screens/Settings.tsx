@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Screen } from '../types';
 import { Card, Button, Badge, SafeAreaView } from '../components/EnergyWiseElements';
@@ -56,16 +55,16 @@ const Settings: React.FC<{ navigateTo: (s: Screen) => void }> = ({ navigateTo })
       {/* Preferences Section */}
       <section className="flex flex-col gap-3">
         <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-[4px] mb-2 ml-2">Preferenze</h3>
-        <SettingOption icon={<Bell size={20} />} label="Notifiche & Alert" count="Attive" />
-        <SettingOption icon={<Moon size={20} />} label="Tema & Unità" count="System (kWh)" />
-        <SettingOption icon={<Shield size={20} />} label="Privacy & Sicurezza" />
+        <SettingOption icon={<Bell size={20} />} label="Notifiche e Avvisi" count="Attive" />
+        <SettingOption icon={<Moon size={20} />} label="Tema e Unità" count="Sistema (kWh)" />
+        <SettingOption icon={<Shield size={20} />} label="Privacy e Sicurezza" />
         <SettingOption icon={<Download size={20} />} label="Esporta Dati" count="PDF / CSV" />
       </section>
 
       {/* Support Section */}
       <section className="flex flex-col gap-3">
         <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-[4px] mb-2 ml-2">Informazioni</h3>
-        <SettingOption icon={<HelpCircle size={20} />} label="Assistenza & Supporto" />
+        <SettingOption icon={<HelpCircle size={20} />} label="Assistenza e Supporto" />
         <SettingOption icon={<Info size={20} />} label="Termini e Privacy" />
       </section>
 
@@ -75,12 +74,12 @@ const Settings: React.FC<{ navigateTo: (s: Screen) => void }> = ({ navigateTo })
           className="w-full py-5 rounded-[20px] flex items-center justify-center gap-3 bg-[#FF6B35]/5 text-[#FF6B35] font-black uppercase tracking-widest text-xs border border-[#FF6B35]/15 hover:bg-[#FF6B35]/10 active:scale-95 transition-all"
         >
           <LogOut size={20} />
-          Logout Account
+          Esci dall'Account
         </button>
         
         <div className="flex flex-col items-center gap-2">
            <p className="text-[10px] text-[#E5E7EB] font-black uppercase tracking-[5px]">EnergyWise</p>
-           <p className="text-[8px] text-[#E5E7EB] font-bold uppercase tracking-[1px]">Build 2.4.0 • Release Channel</p>
+           <p className="text-[8px] text-[#E5E7EB] font-bold uppercase tracking-[1px]">Versione 2.4.0 • Canale Rilascio</p>
         </div>
       </div>
     </div>

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Screen, Appliance } from '../types';
 import { Card, Button, Badge, SafeAreaView } from '../components/EnergyWiseElements';
@@ -9,16 +8,26 @@ const AddDevice: React.FC<{ onAdd: (a: Appliance) => void, onBack: () => void }>
   const [search, setSearch] = useState('');
   const [selectedModel, setSelectedModel] = useState<any>(null);
   const [usageHours, setUsageHours] = useState(2);
-  const [room, setRoom] = useState('Kitchen');
+  const [room, setRoom] = useState('Cucina');
 
   const SUGGESTED = [
-    { brand: 'Samsung', model: 'RF28', category: 'Kitchen', watts: 350, class: 'A++' },
-    { brand: 'LG', model: 'ThinQ Smart', category: 'Laundry', watts: 2100, class: 'A' },
-    { brand: 'Dyson', model: 'Pure Cool', category: 'Climate', watts: 40, class: 'A+' },
-    { brand: 'Sony', model: 'Bravia XR', category: 'Electronics', watts: 180, class: 'B' },
+    { brand: 'Samsung', model: 'RF28', category: 'Cucina', watts: 350, class: 'A++' },
+    { brand: 'LG', model: 'ThinQ Smart', category: 'Lavanderia', watts: 2100, class: 'A' },
+    { brand: 'Dyson', model: 'Pure Cool', category: 'Climatizzazione', watts: 40, class: 'A+' },
+    { brand: 'Sony', model: 'Bravia XR', category: 'Elettronica', watts: 180, class: 'B' },
   ];
 
-  const ROOMS = ['Kitchen', 'Living Room', 'Bedroom', 'Office', 'Laundry', 'Bathroom'];
+  const ROOMS = ['Cucina', 'Soggiorno', 'Camera', 'Ufficio', 'Lavanderia', 'Bagno'];
+
+  // Map Italian room names back to English for storage
+  const roomMapping: { [key: string]: string } = {
+    'Cucina': 'Kitchen',
+    'Soggiorno': 'Living Room',
+    'Camera': 'Bedroom',
+    'Ufficio': 'Office',
+    'Lavanderia': 'Laundry',
+    'Bagno': 'Bathroom'
+  };
 
   const handleSelectModel = (model: any) => {
     setSelectedModel(model);
@@ -35,7 +44,7 @@ const AddDevice: React.FC<{ onAdd: (a: Appliance) => void, onBack: () => void }>
       standbyWatts: 2,
       energyClass: selectedModel.class,
       customName: `${selectedModel.brand} ${selectedModel.category}`,
-      room: room,
+      room: roomMapping[room] || room,
       dailyUsageHours: usageHours,
       isActive: true
     };
@@ -65,7 +74,7 @@ const AddDevice: React.FC<{ onAdd: (a: Appliance) => void, onBack: () => void }>
           <div className="grid grid-cols-2 gap-4 mb-8">
             <button className="bg-[#1A1A2E] text-white p-6 rounded-3xl flex flex-col items-center gap-4 active:scale-95 transition-all shadow-lg">
               <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center"><Camera size={24} /></div>
-              <span className="text-[10px] font-black uppercase tracking-widest leading-tight">Scansiona<br/>Barcode</span>
+              <span className="text-[10px] font-black uppercase tracking-widest leading-tight">Scansiona<br/>Codice</span>
             </button>
             <button onClick={() => setStep(2)} className="bg-white text-[#1A1A2E] p-6 rounded-3xl flex flex-col items-center gap-4 border border-[#E5E7EB] shadow-sm active:scale-95 transition-all">
               <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center"><PlusCircle size={24} /></div>

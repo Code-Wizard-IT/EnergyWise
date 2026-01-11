@@ -1,11 +1,10 @@
-
 import React, { useState } from 'react';
 import { Appliance } from '../types';
 import { Card, SafeAreaView, Badge } from '../components/EnergyWiseElements';
 import { BarChart3, TrendingUp, Info, ChevronRight, PieChart, Calendar, TrendingDown, LayoutGrid } from 'lucide-react';
 
 const Analytics: React.FC<{ devices: Appliance[] }> = ({ devices }) => {
-  const [period, setPeriod] = useState<'Week' | 'Month' | 'Year'>('Week');
+  const [period, setPeriod] = useState<'Settimana' | 'Mese' | 'Anno'>('Settimana');
   
   // Chart Data Simulation
   const weeklyData = [8.2, 10.5, 9.8, 14.2, 11.5, 7.8, 9.2];
@@ -35,7 +34,7 @@ const Analytics: React.FC<{ devices: Appliance[] }> = ({ devices }) => {
 
       {/* Period Selector */}
       <div className="flex p-1 bg-white rounded-2xl border border-[#E5E7EB] mb-8 shadow-sm">
-        {['Week', 'Month', 'Year'].map((p) => (
+        {['Settimana', 'Mese', 'Anno'].map((p) => (
           <button 
             key={p} 
             onClick={() => setPeriod(p as any)}
@@ -105,7 +104,7 @@ const Analytics: React.FC<{ devices: Appliance[] }> = ({ devices }) => {
                  <span className="text-2xl font-black text-[#1A1A2E]">10.2</span>
                  <span className="text-[10px] font-bold text-gray-400">kWh</span>
               </div>
-              <Badge bgColor="#E8F5E9" color="#00A86B">Optimized</Badge>
+              <Badge bgColor="#E8F5E9" color="#00A86B">Ottimizzato</Badge>
            </Card>
            
            <Card className="p-5 flex flex-col gap-2 bg-[#00A86B] border-none text-white">
@@ -114,7 +113,7 @@ const Analytics: React.FC<{ devices: Appliance[] }> = ({ devices }) => {
                  <span className="text-2xl font-black">€14.50</span>
                  <TrendingDown size={18} className="text-white" />
               </div>
-              <p className="text-[9px] font-bold text-white/80 uppercase">-12% vs last month</p>
+              <p className="text-[9px] font-bold text-white/80 uppercase">-12% vs mese scorso</p>
            </Card>
         </div>
 

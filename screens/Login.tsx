@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '../components/EnergyWiseElements';
 import { Zap } from 'lucide-react';
@@ -23,7 +22,7 @@ const Login: React.FC<{ onLogin: () => void, onRegister: () => void }> = ({ onLo
             activeTab === 'login' ? 'bg-[#00A86B] text-white shadow-lg' : 'text-[#6B7280]'
           }`}
         >
-          Login
+          Accedi
         </button>
         <button 
           onClick={() => { setActiveTab('register'); onRegister(); }}
@@ -31,7 +30,7 @@ const Login: React.FC<{ onLogin: () => void, onRegister: () => void }> = ({ onLo
             activeTab === 'register' ? 'bg-[#00A86B] text-white shadow-lg' : 'text-[#6B7280]'
           }`}
         >
-          Register
+          Registrati
         </button>
       </div>
       
@@ -55,9 +54,9 @@ const Login: React.FC<{ onLogin: () => void, onRegister: () => void }> = ({ onLo
       <div className="flex items-center justify-between mb-8">
         <label className="flex items-center gap-2 text-xs text-[#6B7280] font-bold">
           <input type="checkbox" className="rounded-md bg-white/10 border-none w-4 h-4 cursor-pointer" />
-          Remember me
+          Ricordami
         </label>
-        <button className="text-xs text-[#00A86B] font-black uppercase tracking-widest">Forgot password?</button>
+        <button className="text-xs text-[#00A86B] font-black uppercase tracking-widest">Password dimenticata?</button>
       </div>
 
       <Button variant="energy" onClick={onLogin} className="mb-6 py-5 text-lg">Accedi</Button>

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Appliance } from '../types';
 import { Card, Button, SafeAreaView, Badge } from '../components/EnergyWiseElements';
@@ -42,10 +41,35 @@ const DeviceDetail: React.FC<{
   const costDaily = kwhDaily * ENERGY_PRICE;
   const costMonthly = kwhMonthly * ENERGY_PRICE;
 
+  // Translate room names
+  const translateRoom = (room: string) => {
+    const translations: { [key: string]: string } = {
+      'Kitchen': 'Cucina',
+      'Living Room': 'Soggiorno',
+      'Bedroom': 'Camera',
+      'Office': 'Ufficio',
+      'Laundry': 'Lavanderia',
+      'Bathroom': 'Bagno'
+    };
+    return translations[room] || room;
+  };
+
+  // Translate category names
+  const translateCategory = (category: string) => {
+    const translations: { [key: string]: string } = {
+      'Kitchen': 'Cucina',
+      'Laundry': 'Lavanderia',
+      'Climate': 'Climatizzazione',
+      'Electronics': 'Elettronica',
+      'Lighting': 'Illuminazione'
+    };
+    return translations[category] || category;
+  };
+
   return (
     <div className="h-full bg-[#F5F7FA] overflow-y-auto no-scrollbar pb-[100px]">
-      {/* Header Section */}
-      <div className={`h-60 pt-[60px] relative flex flex-col items-center justify-center transition-colors duration-500 ${isActive ? 'bg-[#1A1A2E]' : 'bg-gray-400'}`}>
+      {/* Header Section - REDUCED HEIGHT */}
+      <div className={`h-52 pt-[60px] relative flex flex-col items-center justify-center transition-colors duration-500 ${isActive ? 'bg-[#1A1A2E]' : 'bg-gray-400'}`}>
         <button 
           onClick={onBack} 
           className="absolute top-16 left-6 w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center backdrop-blur text-white active:scale-90 transition-all border border-white/5"
@@ -55,22 +79,22 @@ const DeviceDetail: React.FC<{
         
         <div className="flex flex-col items-center">
           <div className="relative">
-             <div className={`w-20 h-20 rounded-[28px] flex items-center justify-center shadow-2xl transition-all duration-500 ${isActive ? 'bg-[#00A86B]' : 'bg-white/10'}`}>
-                <Zap size={40} className={isActive ? 'text-white fill-white' : 'text-white/40'} />
+             <div className={`w-16 h-16 rounded-[24px] flex items-center justify-center shadow-2xl transition-all duration-500 ${isActive ? 'bg-[#00A86B]' : 'bg-white/10'}`}>
+                <Zap size={32} className={isActive ? 'text-white fill-white' : 'text-white/40'} />
              </div>
-             {isActive && <div className="absolute inset-0 bg-[#00A86B] rounded-[28px] animate-ping opacity-10"></div>}
+             {isActive && <div className="absolute inset-0 bg-[#00A86B] rounded-[24px] animate-ping opacity-10"></div>}
           </div>
-          <h1 className="mt-4 text-white text-xl font-black">{currentDevice.customName || currentDevice.model}</h1>
-          <p className="text-white/50 text-[10px] font-black uppercase tracking-[3px]">{currentDevice.brand} • {currentDevice.model}</p>
+          <h1 className="mt-3 text-white text-lg font-black">{currentDevice.customName || currentDevice.model}</h1>
+          <p className="text-white/50 text-[9px] font-black uppercase tracking-[2px]">{currentDevice.brand} • {currentDevice.model}</p>
         </div>
       </div>
 
-      <div className="px-6 -mt-6">
-        {/* Specs Card */}
-        <Card className="mb-8 border-none" elevated>
+      <div className="px-6 -mt-4">
+        {/* Specs Card - PROPERLY POSITIONED */}
+        <Card className="mb-6 border-none" elevated>
            <div className="flex items-center justify-between mb-4">
               <h3 className="text-[10px] font-black text-[#6B7280] uppercase tracking-[2px]">Specifiche Tecniche</h3>
-              <Badge bgColor="#E8F5E9" color="#00A86B">Attivo</Badge>
+              <Badge bgColor="#E8F5E9" color="#00A86B">{isActive ? 'Attivo' : 'Inattivo'}</Badge>
            </div>
            <div className="grid grid-cols-3 gap-4">
               <div className="flex flex-col gap-1">
@@ -89,7 +113,7 @@ const DeviceDetail: React.FC<{
         </Card>
 
         {/* Usage Slider Section */}
-        <section className="mb-8">
+        <section className="mb-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-[10px] font-black text-[#6B7280] uppercase tracking-[2px] ml-1">Configurazione Utilizzo</h3>
             <div className="flex items-center gap-1.5 bg-[#E5E7EB] px-2 py-0.5 rounded-full">
@@ -122,8 +146,8 @@ const DeviceDetail: React.FC<{
         </section>
 
         {/* Consumption Breakdown Grid */}
-        <section className="mb-8">
-           <h3 className="text-[10px] font-black text-[#6B7280] uppercase tracking-[2px] mb-4 ml-1">Breakdown Consumi</h3>
+        <section className="mb-6">
+           <h3 className="text-[10px] font-black text-[#6B7280] uppercase tracking-[2px] mb-4 ml-1">Dettaglio Consumi</h3>
            <div className="grid grid-cols-2 gap-4">
               <BreakdownItem label="Giornaliero" kwh={kwhDaily} cost={costDaily} />
               <BreakdownItem label="Settimanale" kwh={kwhWeekly} cost={costDaily * 7} />
@@ -133,7 +157,7 @@ const DeviceDetail: React.FC<{
         </section>
 
         {/* Active Toggle */}
-        <Card className="mb-10 flex items-center justify-between py-4 border-[#E5E7EB]">
+        <Card className="mb-8 flex items-center justify-between py-4 border-[#E5E7EB]">
            <div className="flex items-center gap-3">
               <div className={`w-3 h-3 rounded-full ${isActive ? 'bg-[#00A86B] animate-pulse' : 'bg-gray-300'}`}></div>
               <span className="font-extrabold text-[#1A1A2E] text-sm">Stato Dispositivo</span>
