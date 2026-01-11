@@ -1,7 +1,7 @@
 import React from 'react';
 import { Screen } from '../types';
 import { Card, Button, Badge, SafeAreaView } from '../components/EnergyWiseElements';
-import { Search, Plus, FileText, ChevronRight, Camera, Calculator, SlidersHorizontal, ArrowUpRight, TrendingDown } from 'lucide-react';
+import { FileText, ChevronRight, Camera, SlidersHorizontal, ArrowUpRight, TrendingDown } from 'lucide-react';
 
 const BillHub: React.FC<{ navigateTo: (s: Screen) => void }> = ({ navigateTo }) => {
   // Dati per il grafico a colonne
@@ -20,44 +20,44 @@ const BillHub: React.FC<{ navigateTo: (s: Screen) => void }> = ({ navigateTo }) 
     <SafeAreaView className="bg-[#F5F7FA]">
       <h1 className="text-2xl font-[900] text-[#1A1A2E] mb-6 mt-4">Bollette e Costi</h1>
 
-      {/* Bar Chart Card - NUOVO */}
+      {/* Bar Chart Card - ENLARGED */}
       <Card className="p-0 border-none overflow-hidden mb-6" elevated>
         <div className="p-5 border-b border-gray-50 flex justify-between items-center bg-white">
-          <h3 className="text-xs font-black text-[#1A1A2E] uppercase tracking-wide">Storico Costi (€)</h3>
-          <div className="flex items-center gap-1 bg-[#E8F5E9] px-3 py-1 rounded-full">
-            <TrendingDown size={12} className="text-[#00A86B]" />
-            <span className="text-[9px] font-black text-[#00A86B] uppercase">-13% vs 6 mesi fa</span>
+          <h3 className="text-sm font-black text-[#1A1A2E] uppercase tracking-wide">Storico Costi</h3>
+          <div className="flex items-center gap-1 bg-[#E8F5E9] px-3 py-1.5 rounded-full">
+            <TrendingDown size={14} className="text-[#00A86B]" />
+            <span className="text-[10px] font-black text-[#00A86B] uppercase">-13%</span>
           </div>
         </div>
         
-        <div className="bg-white p-5">
-          {/* Bar Chart */}
-          <div className="flex items-end justify-between gap-3 h-32 mb-4">
+        <div className="bg-white p-6">
+          {/* Bar Chart - LARGER */}
+          <div className="flex items-end justify-between gap-4 h-40 mb-5">
             {monthlyData.map((item, i) => {
               const heightPercent = (item.cost / maxCost) * 100;
               const isLast = i === monthlyData.length - 1;
               return (
                 <div key={i} className="flex-1 flex flex-col items-center gap-2">
-                  <span className="text-[10px] font-black text-[#1A1A2E]">€{item.cost}</span>
+                  <span className="text-[11px] font-black text-[#1A1A2E]">€{item.cost}</span>
                   <div 
                     className={`w-full rounded-t-lg transition-all duration-500 ${isLast ? 'bg-[#00A86B]' : 'bg-[#E5E7EB]'}`}
-                    style={{ height: `${heightPercent}%` }}
+                    style={{ height: `${heightPercent}%`, minHeight: '20px' }}
                   />
-                  <span className="text-[9px] font-black text-[#6B7280] uppercase">{item.month}</span>
+                  <span className="text-[10px] font-black text-[#6B7280] uppercase">{item.month}</span>
                 </div>
               );
             })}
           </div>
           
           {/* Summary Row */}
-          <div className="flex items-center justify-between pt-4 border-t border-[#F5F7FA]">
+          <div className="flex items-center justify-between pt-5 border-t border-[#F5F7FA]">
             <div>
-              <span className="text-[9px] font-black text-[#6B7280] uppercase tracking-widest block">Media 6 Mesi</span>
-              <span className="text-lg font-black text-[#1A1A2E]">€100.17</span>
+              <span className="text-[9px] font-black text-[#6B7280] uppercase tracking-widest block mb-1">Media 6 Mesi</span>
+              <span className="text-xl font-black text-[#1A1A2E]">€100.17</span>
             </div>
             <div className="text-right">
-              <span className="text-[9px] font-black text-[#6B7280] uppercase tracking-widest block">Totale Periodo</span>
-              <span className="text-lg font-black text-[#0077B6]">€601.00</span>
+              <span className="text-[9px] font-black text-[#6B7280] uppercase tracking-widest block mb-1">Totale Periodo</span>
+              <span className="text-xl font-black text-[#0077B6]">€601.00</span>
             </div>
           </div>
         </div>

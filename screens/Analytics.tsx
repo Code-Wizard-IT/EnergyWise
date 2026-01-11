@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Appliance } from '../types';
 import { Card, SafeAreaView, Badge } from '../components/EnergyWiseElements';
-import { BarChart3, TrendingUp, Info, ChevronRight, PieChart, Calendar, TrendingDown, LayoutGrid, Zap } from 'lucide-react';
+import { BarChart3, TrendingUp, Info, ChevronRight, PieChart, Calendar, TrendingDown, LayoutGrid, Zap, Target } from 'lucide-react';
 
 const Analytics: React.FC<{ devices: Appliance[] }> = ({ devices }) => {
   const [period, setPeriod] = useState<'Settimana' | 'Mese' | 'Anno'>('Settimana');
@@ -22,9 +22,6 @@ const Analytics: React.FC<{ devices: Appliance[] }> = ({ devices }) => {
 
   const linePath = weeklyData.reduce((acc, val, i) => 
     acc + (i === 0 ? `M ${getX(i)} ${getY(val)}` : ` L ${getX(i)} ${getY(val)}`), '');
-
-  // Totale settimanale
-  const weeklyTotal = weeklyData.reduce((a, b) => a + b, 0);
 
   return (
     <SafeAreaView className="bg-[#F5F7FA]">
@@ -51,6 +48,33 @@ const Analytics: React.FC<{ devices: Appliance[] }> = ({ devices }) => {
       </div>
 
       <div className="flex flex-col gap-6 overflow-y-auto no-scrollbar pb-24">
+        
+        {/* Stats Card - FULL WIDTH, single card */}
+        <Card className="p-6 border-[#E5E7EB] w-full">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <span className="text-[9px] font-black text-[#6B7280] uppercase tracking-widest block mb-1">Media Giornaliera</span>
+              <div className="flex items-baseline gap-2">
+                <span className="text-4xl font-black text-[#1A1A2E]">10.2</span>
+                <span className="text-sm font-bold text-gray-400">kWh</span>
+              </div>
+            </div>
+            <div className="text-right">
+              <span className="text-[9px] font-black text-[#6B7280] uppercase tracking-widest block mb-1">Costo Giornaliero</span>
+              <div className="flex items-baseline gap-1 justify-end">
+                <span className="text-2xl font-black text-[#0077B6]">€3.06</span>
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <Badge bgColor="#E8F5E9" color="#00A86B">Ottimizzato</Badge>
+            <div className="flex items-center gap-1 text-[#00A86B]">
+              <TrendingDown size={14} />
+              <span className="text-[10px] font-black">-8% vs settimana scorsa</span>
+            </div>
+          </div>
+        </Card>
+
         {/* Line Chart Card */}
         <Card className="p-0 border-none overflow-hidden" elevated>
            <div className="p-5 border-b border-gray-50 flex justify-between items-center bg-white">
@@ -99,27 +123,6 @@ const Analytics: React.FC<{ devices: Appliance[] }> = ({ devices }) => {
            </div>
         </Card>
 
-        {/* Stats Row - FIXED: Both cards have content */}
-        <div className="grid grid-cols-2 gap-4">
-           <Card className="p-5 flex flex-col gap-2 border-[#E5E7EB]">
-              <span className="text-[9px] font-black text-[#6B7280] uppercase tracking-widest">Media Giornaliera</span>
-              <div className="flex items-baseline gap-1">
-                 <span className="text-2xl font-black text-[#1A1A2E]">10.2</span>
-                 <span className="text-[10px] font-bold text-gray-400">kWh</span>
-              </div>
-              <Badge bgColor="#E8F5E9" color="#00A86B">Ottimizzato</Badge>
-           </Card>
-           
-           <Card className="p-5 flex flex-col gap-2 bg-[#00A86B] border-none text-white">
-              <span className="text-[9px] font-black text-white/60 uppercase tracking-widest">Risparmio Mese</span>
-              <div className="flex items-center gap-2">
-                 <span className="text-2xl font-black">€14.50</span>
-                 <TrendingDown size={18} className="text-white" />
-              </div>
-              <p className="text-[9px] font-bold text-white/80 uppercase">-12% vs mese scorso</p>
-           </Card>
-        </div>
-
         {/* Category Distribution Section */}
         <section>
            <div className="flex items-center justify-between mb-4 px-2">
@@ -149,39 +152,38 @@ const Analytics: React.FC<{ devices: Appliance[] }> = ({ devices }) => {
            </Card>
         </section>
 
-        {/* Insights Box - ENLARGED */}
-        <div className="bg-[#1A1A2E] p-8 rounded-[24px] mb-8 text-white relative overflow-hidden">
-           <div className="flex gap-5 mb-4">
-              <div className="w-16 h-16 shrink-0 bg-white/10 rounded-2xl flex items-center justify-center text-[#FFB800]">
-                 <Info size={32} />
-              </div>
-              <div className="relative z-10 flex-1">
-                 <h4 className="font-black text-lg text-white mb-2">Analisi IA Avanzata</h4>
-                 <p className="text-sm text-white/70 font-medium leading-relaxed">
-                    Abbiamo rilevato un picco di consumo di <span className="text-[#FF6B35] font-bold">4.2 kWh</span> nella giornata di Giovedì.
-                 </p>
-              </div>
-           </div>
-           
-           <div className="bg-white/5 rounded-xl p-4 mb-4">
-              <p className="text-sm text-white/80 leading-relaxed">
-                 Sembra che la <span className="text-white font-bold">Lavasciuga</span> sia stata utilizzata nella fascia oraria di punta (F1), quando il costo dell'energia è più alto. 
-                 Ti consigliamo di spostare l'utilizzo nelle fasce F2 o F3 per risparmiare fino a <span className="text-[#00A86B] font-bold">€3.50/mese</span>.
-              </p>
-           </div>
-           
-           <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                 <Zap size={16} className="text-[#FFB800]" />
-                 <span className="text-[10px] font-black text-white/50 uppercase tracking-widest">Suggerimento automatico</span>
-              </div>
-              <button className="text-[11px] font-black text-[#00A86B] uppercase tracking-widest flex items-center gap-1 bg-[#00A86B]/10 px-4 py-2 rounded-full">
-                 Vedi dettagli <ChevronRight size={14} />
-              </button>
-           </div>
-           
-           <LayoutGrid size={120} className="absolute -right-10 -bottom-10 text-white/5 rotate-12 pointer-events-none" />
-        </div>
+        {/* Insights Box - MUCH LARGER */}
+        <Card className="bg-[#1A1A2E] border-none p-6" elevated>
+          <div className="flex items-start gap-4 mb-5">
+            <div className="w-14 h-14 shrink-0 bg-[#FFB800]/20 rounded-2xl flex items-center justify-center">
+              <Info size={28} className="text-[#FFB800]" />
+            </div>
+            <div>
+              <h4 className="font-black text-xl text-white mb-1">Analisi IA Avanzata</h4>
+              <p className="text-[10px] text-white/50 font-black uppercase tracking-widest">Suggerimenti personalizzati</p>
+            </div>
+          </div>
+          
+          <div className="bg-white/5 rounded-2xl p-5 mb-5 border border-white/10">
+            <p className="text-base text-white/90 font-medium leading-relaxed mb-4">
+              Abbiamo rilevato un <span className="text-[#FF6B35] font-bold">picco di consumo di 4.2 kWh</span> nella giornata di Giovedì.
+            </p>
+            <p className="text-sm text-white/70 leading-relaxed">
+              La <span className="text-white font-bold">Lavasciuga</span> è stata utilizzata nella fascia oraria di punta (F1), quando il costo dell'energia è più alto. 
+              Spostando l'utilizzo nelle fasce F2 o F3 potresti risparmiare fino a <span className="text-[#00A86B] font-bold">€3.50 al mese</span>.
+            </p>
+          </div>
+          
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Zap size={16} className="text-[#FFB800]" />
+              <span className="text-[10px] font-black text-white/40 uppercase tracking-widest">Suggerimento AI</span>
+            </div>
+            <button className="text-[11px] font-black text-white uppercase tracking-widest flex items-center gap-1 bg-[#00A86B] px-5 py-3 rounded-xl">
+              Scopri di più <ChevronRight size={14} />
+            </button>
+          </div>
+        </Card>
       </div>
     </SafeAreaView>
   );
